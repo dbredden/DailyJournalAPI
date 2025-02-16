@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data;
+﻿using Domain.Interfaces;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,8 @@ namespace Infrastructure
             {
                 options.UseSqlServer("Server=.;Database=DailyJournal;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
             });
+
+            services.AddScoped<IJournalRepository, JournalRepository>();
 
             return services;
         }
