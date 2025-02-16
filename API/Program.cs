@@ -14,7 +14,9 @@ namespace API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddAppDI();
+            //builder.Services.Configure<ConnectionStringOptions>(builder.Configuration);
+
+            builder.Services.AddAppDI(builder.Configuration);
 
             var app = builder.Build();
 

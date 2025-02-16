@@ -1,8 +1,10 @@
 ﻿using Domain.Interfaces;
+using Domain.Options;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure
 {
@@ -10,9 +12,9 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructureDI(this IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>((provider, options) =>
             {
-                options.UseSqlServer("Server=.;Database=DailyJournal;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+                options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
             });
 
             services.AddScoped<IJournalRepository, JournalRepository>();
